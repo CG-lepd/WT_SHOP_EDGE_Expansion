@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gaijin Market Enhancer</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-root">
+    <header class="popup-header">
+      <span class="popup-logo">📊</span>
+      <h1>Gaijin Market Enhancer</h1>
+      <span class="popup-badge">v1.0.0</span>
+    </header>
+
+    <!-- Token 状态 -->
+    <section class="popup-section">
+      <div class="popup-status" id="token-status">
+        <span class="status-dot status-dot--pending"></span>
+        <span>正在检查 Token...</span>
+      </div>
+    </section>
+
+    <!-- 快速概览 -->
+    <section class="popup-section">
+      <h2 class="popup-section-title">快速概览</h2>
+      <div class="popup-grid" id="quick-stats">
+        <div class="popup-stat-card">
+          <div class="popup-stat-label">页面状态</div>
+          <div class="popup-stat-value" id="page-status">未检测</div>
+        </div>
+        <div class="popup-stat-card">
+          <div class="popup-stat-label">快捷键</div>
+          <div class="popup-stat-value" style="font-size:12px;">Ctrl+Shift+G</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 手动输入 Token -->
+    <section class="popup-section" id="manual-token-section">
+      <h2 class="popup-section-title">✏️ 手动输入 Token</h2>
+      <p class="popup-hint">自动获取失败时，在此粘贴 Token 值</p>
+      <textarea id="popup-token-input" class="popup-textarea" rows="2" placeholder="粘贴 Token 到这里..."></textarea>
+      <div style="display:flex;gap:6px;margin-top:6px;">
+        <button class="popup-btn popup-btn--small" id="btn-save-token" style="flex:1;">💾 保存</button>
+        <button class="popup-btn popup-btn--small popup-btn--secondary" id="btn-retry-token" style="flex:1;">🔄 重试自动</button>
+      </div>
+      <p id="popup-token-feedback" style="font-size:10px;margin-top:4px;"></p>
+    </section>
+
+    <!-- 缓存信息 -->
+    <section class="popup-section">
+      <h2 class="popup-section-title">缓存信息</h2>
+      <div class="popup-info" id="cache-info">
+        <span class="popup-info-label">本地缓存:</span>
+        <span>查询中...</span>
+      </div>
+    </section>
+
+    <!-- 操作按钮 -->
+    <section class="popup-section popup-actions">
+      <button class="popup-btn" id="btn-open-page">打开交易市场</button>
+      <button class="popup-btn popup-btn--secondary" id="btn-clear-cache">清除缓存</button>
+    </section>
+
+    <footer class="popup-footer">
+      <p>需要在 trade.gaijin.net 页面使用</p>
+    </footer>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

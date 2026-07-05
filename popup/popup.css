@@ -1,0 +1,209 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #1a1a2e;
+  --surface: #16213e;
+  --surface-2: #0f3460;
+  --accent: #e94560;
+  --text: #e8e8e8;
+  --text-2: #a0a0b0;
+  --green: #2ecc71;
+  --red: #e74c3c;
+  --radius: 8px;
+  --font: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  width: 340px;
+  min-height: 320px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.popup-root {
+  padding: 0;
+}
+
+/* ── 头部 ─────────────────────────────────────── */
+
+.popup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.popup-logo {
+  font-size: 24px;
+}
+
+.popup-header h1 {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.popup-badge {
+  font-size: 10px;
+  padding: 2px 8px;
+  background: var(--surface-2);
+  border-radius: 10px;
+  color: var(--text-2);
+}
+
+/* ── 区块 ─────────────────────────────────────────── */
+
+.popup-section {
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.popup-section-title {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-2);
+  margin-bottom: 8px;
+}
+
+/* ── 状态 ─────────────────────────────────────────── */
+
+.popup-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.status-dot--ok      { background: var(--green); }
+.status-dot--error   { background: var(--red); }
+.status-dot--pending { background: #f39c12; }
+
+/* ── 网格 ─────────────────────────────────────────── */
+
+.popup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.popup-stat-card {
+  padding: 10px;
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.popup-stat-label {
+  font-size: 10px;
+  color: var(--text-2);
+  margin-bottom: 4px;
+}
+
+.popup-stat-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ── 信息行 ───────────────────────────────────────── */
+
+.popup-info {
+  display: flex;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-2);
+}
+
+.popup-info-label {
+  color: var(--text);
+  font-weight: 500;
+}
+
+/* ── 按钮 ─────────────────────────────────────────── */
+
+.popup-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.popup-btn {
+  flex: 1;
+  padding: 8px 16px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  min-width: 140px;
+}
+
+.popup-btn:hover {
+  opacity: 0.85;
+}
+
+.popup-btn--secondary {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+/* ── 底部 ─────────────────────────────────────────── */
+
+.popup-hint {
+  font-size: 10px;
+  color: var(--text-2);
+  margin-bottom: 6px;
+}
+
+.popup-textarea {
+  width: 100%;
+  padding: 6px 8px;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 11px;
+  font-family: 'Consolas', 'Cascadia Code', monospace;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.popup-textarea:focus {
+  border-color: var(--accent);
+}
+
+.popup-btn--small {
+  padding: 6px 10px;
+  font-size: 11px;
+  min-width: auto;
+}
+
+.popup-footer {
+  padding: 10px 16px;
+  text-align: center;
+}
+
+.popup-footer p {
+  font-size: 10px;
+  color: var(--text-2);
+}

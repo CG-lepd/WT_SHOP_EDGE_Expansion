@@ -1,0 +1,48 @@
+{
+  "manifest_version": 3,
+  "name": "Gaijin Market Enhancer",
+  "version": "2.0.0",
+  "description": "为 trade.gaijin.net 补全交易历史、数据分析、市场行情等增强功能",
+  "author": "CG",
+
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+
+  "host_permissions": [
+    "https://trade.gaijin.net/*",
+    "https://market-proxy.gaijin.net/*"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://trade.gaijin.net/*"],
+      "js": ["content.js"],
+      "css": ["styles/injected.css"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Gaijin Market Enhancer"
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "minimum_chrome_version": "116"
+}
