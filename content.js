@@ -41,13 +41,17 @@
   //  Token 管理
   // ══════════════════════════════════════════════════════
 
+  // content script 运行在隔离世界，无法直接访问页面 localStorage，
+  // 通过 background 的 chrome.scripting.executeScript(world:'MAIN') 读取
+  let _autoTokenPromise = null;
+
   function getAutoToken() {
-    try {
-      const raw = localStorage.getItem('MarketApp.auth.tokenPair');
-      if (!raw) return null;
-      const p = JSON.parse(raw);
-      return p.token || p.access_token || raw;
-    } catch { return null; }
+    if (_autoTokenPromise) return _autoTokenPromise;
+    _autoTokenPromise = chrome.runtime.sendMessage({ type: 'GET_AUTO_TOKEN' })
+      .then(r => r?.token || null)
+      .catch(() => null)
+      .then(t => { _autoTokenPromise = null; return t; });
+    return _autoTokenPromise;
   }
 
   function getManualToken() {
@@ -63,7 +67,7 @@
   }
 
   async function getToken() {
-    const a = getAutoToken(); if (a) { STATE.tokenSource = 'auto'; return a; }
+    const a = await getAutoToken(); if (a) { STATE.tokenSource = 'auto'; return a; }
     const m = await getManualToken(); if (m) { STATE.tokenSource = 'manual'; return m; }
     STATE.tokenSource = null; return null;
   }
@@ -506,7 +510,7 @@
           <div class="gme-settings-group">
             <h4>✏️ 手动输入 Token</h4>
             <p style="font-size:11px;color:var(--gme-text-2);margin-bottom:6px;">
-              从 F12 → Application → Local Storage → <code>MarketApp.auth.tokenPair</code> 复制值粘贴
+              从 F12 → Application → Local Storage → <code>MarketApp,auth,tokenPair</code> 复制值粘贴
             </p>
             <textarea id="gme-token-input" class="gme-textarea" rows="2" placeholder="在此粘贴 Token..."></textarea>
             <div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;">
@@ -1218,7 +1222,8 @@
 
   async function retryAutoToken() {
     const fb = qs('#gme-token-feedback');
-    if (getAutoToken()) { fb.textContent = '✅ 已自动获取到 Token！'; fb.style.color = 'var(--gme-green)'; }
+    const token = await getAutoToken();
+    if (token) { fb.textContent = '✅ 已自动获取到 Token！'; fb.style.color = 'var(--gme-green)'; }
     else { fb.textContent = '❌ 自动获取失败，请手动输入'; fb.style.color = 'var(--gme-red)'; }
     updateSettings();
   }
@@ -1237,7 +1242,7 @@
     const ci = qs('#gme-cache-info');
     const ti = qs('#gme-token-input');
 
-    const auto = getAutoToken();
+    const auto = await getAutoToken();
     const manual = await getManualToken();
 
     if (auto) {
@@ -1275,7 +1280,7 @@
     (async () => {
       switch (msg.type) {
         case 'PING': sendResponse({ ok: !!(await getToken()), source: STATE.tokenSource }); break;
-        case 'RETRY_AUTO_TOKEN': sendResponse({ ok: !!getAutoToken() }); if (getAutoToken()) updateSettings(); break;
+        case 'RETRY_AUTO_TOKEN': { const t = await getAutoToken(); sendResponse({ ok: !!t }); if (t) updateSettings(); break; }
         case 'TOKEN_SAVED': updateSettings(); sendResponse({ ok: true }); break;
         default: sendResponse({ error: 'unknown' });
       }

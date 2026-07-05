@@ -152,6 +152,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
       case 'PING':
         return { ok: true, version: '2.0.0', runtime: 'service_worker' };
 
+      case 'GET_AUTO_TOKEN': {
+        const tabId = sender?.tab?.id;
+        if (!tabId) return { token: null };
+        try {
+          const results = await chrome.scripting.executeScript({
+            target: { tabId },
+            world: 'MAIN',
+            func: () => {
+              try {
+                const raw = localStorage.getItem('MarketApp,auth,tokenPair');
+                if (!raw) return null;
+                const p = JSON.parse(raw);
+                return p.token || p.access_token || raw;
+              } catch { return null; }
+            }
+          });
+          return { token: results?.[0]?.result || null };
+        } catch (e) {
+          return { token: null, error: e.message };
+        }
+      }
+
       default:
         return { error: `Unknown message type: ${message.type}` };
     }
