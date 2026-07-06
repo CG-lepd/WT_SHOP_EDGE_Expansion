@@ -1,10 +1,3 @@
-/**
- * Gaijin Market Enhancer — Content Script v2
- *
- * 注入到 trade.gaijin.net 页面，提供完整的交易历史管理面板。
- * 设计参考 Java Web 项目 Web_WT_shop 的 trade-history.jsp
- */
-
 (function () {
   'use strict';
 
